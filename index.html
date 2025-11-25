@@ -867,7 +867,7 @@
     </section>
 
     <!-- Contracts Section -->
-    <section id="contracts" class="py-20 bg-gray-50">
+    <!-- <section id="contracts" class="py-20 bg-gray-50">
         <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-4xl font-bold text-primary mb-4">Hợp đồng Dự án</h2>
@@ -875,16 +875,13 @@
             </div>
 
             <div id="contracts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Contracts will be populated by JavaScript -->
             </div>
 
             <div class="pagination" id="pagination">
-                <!-- Pagination will be populated by JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- Contract Modal -->
     <div id="contract-modal" class="contract-modal">
         <div class="contract-content">
             <div class="contract-header">
@@ -894,11 +891,48 @@
             </div>
             <div class="contract-body">
                 <div id="contract-details">
-                    <!-- Contract content will be loaded here -->
+
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <section id="contracts" class="py-20 bg-gray-50">
+        <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-primary mb-4">Hợp đồng Dự án</h2>
+                <p class="text-lg text-gray-600">Danh sách các hợp đồng và dự án đang triển khai</p>
+            </div>
+
+            <div id="contracts-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+
+            <div class="pagination flex justify-center mt-12 space-x-2" id="pagination">
+                </div>
+        </div>
+    </section>
+
+    <div id="contract-modal" class="contract-modal">
+        <div class="contract-content">
+            <div class="contract-header">
+                <button onclick="closeContract()" class="close-btn">&times;</button>
+                <h3 id="contract-title" class="text-3xl font-bold relative z-10"></h3>
+                <p class="text-white/80 mt-2 relative z-10">Chi tiết hợp đồng và tiến độ thực hiện</p>
+            </div>
+            <div class="contract-body">
+                <div id="contract-details">
+                    <p class="text-gray-600">Nội dung chi tiết hợp đồng cũ (Nếu có). <br>Chức năng xem ảnh chi tiết đã được chuyển sang Image Modal.</p>
                 </div>
             </div>
         </div>
     </div>
+    
+    <div id="image-modal" class="modal-container fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="relative flex items-center justify-center">
+        <button onclick="closeImageModal()" class="absolute -top-10 right-0 text-white hover:text-gray-300 text-4xl font-light z-50 md:top-4 md:-right-10">&times;</button>
+        <img id="modal-image" src="" alt="Hợp đồng chi tiết" class="rounded-lg shadow-2xl max-w-full max-h-screen cursor-zoom-out" onclick="closeImageModal()">
+    </div>
+</div>
 
     <!-- Footer -->
     <footer class="footer-tech py-16 relative">

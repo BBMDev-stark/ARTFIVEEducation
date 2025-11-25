@@ -7,7 +7,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxxSp5fsL4ckMLpGBMtN
 const $id = (x) => document.getElementById(x);
 
 // Toast Notification (Thông báo nổi)
-function toast(message, type = 'success') {
+function toast(message, type = 'success') { 
     const n = document.createElement('div');
     n.style.cssText = `
         position: fixed; top: 20px; right: 20px; z-index: 9999; max-width: 340px;
@@ -43,21 +43,10 @@ function errorNoti(msg) { toast(msg, 'error'); }
 function infoNoti(msg) { toast(msg, 'info'); }
 function showNotification(msg) { successNoti(msg); }
 
-// Xử lý link PDF để nhúng iframe
-function buildPdfEmbedUrl(rawUrl) {
-    if (!rawUrl) return '';
-    let url = rawUrl.trim();
-    if (/drive\.google\.com/i.test(url)) {
-        const m1 = url.match(/https?:\/\/drive\.google\.com\/file\/d\/([^/]+)/i);
-        if (m1) return `https://drive.google.com/file/d/${m1[1]}/preview`;
-        const m2 = url.match(/https?:\/\/drive\.google\.com\/(?:open|uc)\?[^#]*id=([^&#]+)/i);
-        if (m2) return `https://drive.google.com/uc?export=view&id=${m2[1]}`;
-        if (/drive\.google\.com\/.*\/view/i.test(url)) return url.replace(/\/view(\?.*)?$/i, '/preview');
-    }
-    return `https://docs.google.com/gview?embedded=1&url=${encodeURIComponent(url)}`;
-}
 
 /* -------------------- 2. MODAL LOGIC -------------------- */
+
+// === Modal Tư vấn (Consult Modal) ===
 function openConsultModal() {
     const m = $id('consultModal');
     if (!m) return;
@@ -74,6 +63,7 @@ function closeConsultModal() {
     document.body.style.overflow = 'auto';
 }
 
+// === Modal Cho thuê (Rental Modal) ===
 function openRentalModal() {
     const m = $id('rentalModal');
     if (!m) return;
@@ -90,61 +80,67 @@ function closeRentalModal() {
     document.body.style.overflow = 'auto';
 }
 
-function openPdfModal(rawUrl) {
-    const m = $id('pdfModal');
-    const f = $id('pdfFrame');
-    if (!m || !f) {
-        window.open(rawUrl, '_blank'); 
-        return;
-    }
-    const safeUrl = buildPdfEmbedUrl(rawUrl);
-    f.src = safeUrl;
+// === IMAGE MODAL LOGIC (Phóng to ảnh - ĐÃ CẢI THIỆN UI/UX) ===
+function openImageModal(imageUrl) {
+    const m = $id('image-modal');
+    const img = $id('modal-image');
+    if (!m || !img || !imageUrl) return;
+
+    img.src = imageUrl;
     m.classList.remove('hidden');
     m.classList.add('flex');
     document.body.style.overflow = 'hidden';
-    const timer = setTimeout(() => {
-        try { if (!f.contentWindow) throw new Error(); } catch { window.open(rawUrl, '_blank'); }
-    }, 3000);
-    f.onload = () => clearTimeout(timer);
+
+    // Kích hoạt hiệu ứng phóng to (scale(1) và opacity: 1)
+    setTimeout(() => {
+        img.style.transform = 'scale(1)';
+        img.style.opacity = '1';
+    }, 50);
 }
 
-function closePdfModal() {
-    const m = $id('pdfModal');
-    const f = $id('pdfFrame');
-    if (!m) return;
-    if (f) f.src = '';
-    m.classList.add('hidden');
-    m.classList.remove('flex');
-    document.body.style.overflow = 'auto';
-}
+function closeImageModal() {
+    const m = $id('image-modal');
+    const img = $id('modal-image');
+    if (!m || !img) return;
 
-function closeContract() { 
-    const cm = $id('contract-modal');
-    if (cm) cm.style.display = 'none'; 
+    // Kích hoạt hiệu ứng thu nhỏ (scale(0.85) và opacity: 0)
+    img.style.transform = 'scale(0.85)';
+    img.style.opacity = '0';
+
+    // Thời gian chờ khớp với CSS transition (khoảng 350ms)
+    setTimeout(() => {
+        m.classList.add('hidden');
+        m.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+        img.src = ''; // Xóa nguồn ảnh
+    }, 350); 
 }
+// ===========================================
 
 /* -------------------- 3. INITIALIZATION & EVENTS -------------------- */
 document.addEventListener('DOMContentLoaded', () => {
     
-    // Modal overlay click
+    // Modal overlay click 
     const consult = $id('consultModal');
     if (consult) consult.addEventListener('click', (e) => { if (e.target === consult) closeConsultModal(); });
-    const pdfModal = $id('pdfModal');
-    if (pdfModal) pdfModal.addEventListener('click', (e) => { if (e.target === pdfModal) closePdfModal(); });
+    
     const rentalModal = $id('rentalModal');
     if (rentalModal) rentalModal.addEventListener('click', (e) => { 
         if (e.target.closest('.absolute.inset-0') || e.target === rentalModal) closeRentalModal();
     });
-    const contractModal = $id('contract-modal');
-    if (contractModal) contractModal.addEventListener('click', (e) => { if (e.target === contractModal) closeContract(); });
 
-    // ESC key closes modal
+    const imageModal = $id('image-modal');
+    if (imageModal) imageModal.addEventListener('click', (e) => { 
+        // Đóng khi click vào backdrop hoặc ảnh
+        if (e.target === imageModal || e.target.id === 'modal-image') closeImageModal(); 
+    });
+
+    // ESC key closes modal 
     window.addEventListener('keydown', (e) => { 
         if (e.key === 'Escape') { 
             closeConsultModal(); 
-            closeContract(); 
-            closePdfModal(); 
             closeRentalModal(); 
+            closeImageModal(); 
         } 
     });
 
@@ -182,9 +178,9 @@ document.addEventListener('DOMContentLoaded', () => {
             let valid = true;
             
             // Validation
-            setErr('errName',   !(valid = nameOk(fullName)  && valid));
-            setErr('errPhone',  !(valid = phoneOk(phone)    && valid));
-            setErr('errEmail',  !(valid = emailOk(email)    && valid));
+            setErr('errName',    !(valid = nameOk(fullName)   && valid));
+            setErr('errPhone',   !(valid = phoneOk(phone)     && valid));
+            setErr('errEmail',   !(valid = emailOk(email)     && valid));
 
             if (serviceContent === '' || serviceContent === '[KHÔNG CHỌN DỊCH VỤ]') {
                 if (valid) errorNoti('Vui lòng chọn Dịch vụ Robot.'); 
@@ -237,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* -------------------- FORM CHO THUÊ **************************** */
+    /* -------------------- FORM CHO THUÊ --------------------------- */
     const rentalForm = $id('rentalForm');
     if (rentalForm) {
         rentalForm.addEventListener('submit', async (e) => {
@@ -249,8 +245,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const eventDetails = $id('eventDetails')?.value.trim() ?? '';
 
             let valid = true;
-            setErr('rentalErrName',   !(valid = nameOk(fullName)  && valid));
-            setErr('rentalErrPhone',  !(valid = phoneOk(phone)    && valid));
+            setErr('rentalErrName',   !(valid = nameOk(fullName)   && valid));
+            setErr('rentalErrPhone',  !(valid = phoneOk(phone)     && valid));
             if (!valid) return;
 
             const btn = $id('rentalSubmitBtn');
@@ -301,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initSocialRail();
 });
 
-/* -------------------- 4. VALIDATE -------------------- */
+/* -------------------- 4. VALIDATE & CÁC HÀM LINH TINH -------------------- */
 const nameOk  = (v) => v && v.trim().length >= 2;
 const emailOk = (v) => !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); 
 const phoneOk = (v) => {
@@ -327,29 +323,20 @@ function showSolution(solutionId) {
     openConsultModal();
 }
 
-/* -------------------- 5. HỢP ĐỒNG -------------------- */
+/* -------------------- 5. HỢP ĐỒNG (CẬP NHẬT UI/UX) -------------------- */
 const contracts = [
     {
         id: 1,
-        title: "Dịch vụ cho thuê ROBOT CRUZR",
-        description: "Tài liệu tổng hợp các dịch vụ cho thuê Robot Cruzr, bao gồm biểu diễn, tương tác, chào đón sự kiện và tuỳ chỉnh nội dung theo yêu cầu.",
+        title: "Lễ ký kết MOU 'Đào tạo gắn kết với doanh nghiệp'",
+        description: "lễ phát động cuộc thi xây dựng thương hiệu cá nhân YOUBRANDING 2025.",
         date: "2025-11-22",
         status: "Đang thực hiện",
         value: "Liên hệ",
-        image: "https://saomaiedu.com/wp-content/uploads/2025/07/commercial-service-robot-market-size.webp",
-        pdfUrl: "https://drive.google.com/file/d/1HU7UODWcKUjEiGEuHq150AhGl3enqvjt/view",
+        // Sửa URL mẫu để đảm bảo hiển thị
+        image: "https://lh3.googleusercontent.com/d/1mFXya3v0dB8PrzCPSSIuBB0rcHHj78Mh", 
         content: ``
     },
-    {
-        id: 2,
-        title: "Đào tạo AI cho trường Quốc Tế",
-        description: "Triển khai giáo trình Robotics mức độ nâng cao cho khối trung học.",
-        date: "2025-10-15",
-        status: "Hoàn thành",
-        value: "Hợp tác",
-        image: "https://static.wixstatic.com/media/11062b_11677353986a4e21a2068032779e5636~mv2.jpg/v1/fill/w_640,h_400,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/11062b_11677353986a4e21a2068032779e5636~mv2.jpg",
-        pdfUrl: ""
-    },
+    // Thêm các hợp đồng khác tại đây...
 ];
 
 let currentPage = 1;
@@ -365,31 +352,42 @@ function displayContracts(page) {
     grid.innerHTML = '';
 
     contractsToShow.forEach(contract => {
-        const hasPdf = !!contract.pdfUrl;
+        const hasImage = !!contract.image; 
         const statusClass = contract.status === 'Hoàn thành' ? 'bg-green-100 text-green-800' :
                              contract.status === 'Đang thực hiện' ? 'bg-blue-100 text-blue-800' :
                              'bg-yellow-100 text-yellow-800';
+        
+        // CẬP NHẬT: Dùng tên nút "Xem Ảnh"
+        const buttonText = hasImage ? 'Xem Ảnh' : '🔒 Chưa có Ảnh'; 
+        const buttonClass = hasImage ? 'bg-primary hover:bg-primary/90' : 'bg-gray-400 cursor-not-allowed';
+        // Hành động là mở Image Modal
+        const buttonAction = hasImage ? `openImageModal('${contract.image}')` : `errorNoti('Hợp đồng này chưa có hình ảnh minh họa.')`;
 
         const el = document.createElement('div');
-        el.className = 'contract-card bg-white rounded-xl overflow-hidden shadow-lg hover:-translate-y-1 transition-transform duration-300';
+        // Thêm UI/UX: shadow-2xl, hover:shadow-2xl, hover:-translate-y-1, group
+        el.className = 'contract-card bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group'; 
+        
         el.innerHTML = `
-            <div class="relative h-48 group cursor-pointer" onclick="viewContractDetails(${contract.id})">
+            <div class="relative h-48 overflow-hidden">
                 <img src="${contract.image}" alt="${contract.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                 <div class="absolute top-4 right-4">
                     <span class="px-3 py-1 text-xs font-semibold rounded-full ${statusClass}">${contract.status}</span>
                 </div>
             </div>
+            
             <div class="p-6">
                 <div class="flex justify-between items-start mb-3">
                     <span class="text-sm text-gray-500">${contract.date}</span>
                     <span class="text-lg font-bold text-secondary">${contract.value}</span>
                 </div>
+                
                 <h3 class="text-xl font-bold text-primary mb-2 line-clamp-2">${contract.title}</h3>
-                <p class="text-gray-600 mb-4 line-clamp-3">${contract.description}</p>
-                <div class="flex gap-2">
-                    <button onclick="${hasPdf ? `openPdfModal('${contract.pdfUrl}')` : `errorNoti('Chưa có file PDF')`}"
-                            class="${hasPdf ? 'bg-primary hover:bg-primary/90' : 'bg-gray-300 cursor-not-allowed'} text-white px-4 py-2 rounded-lg transition-colors text-sm flex-1 font-medium interactive-button">
-                        ${hasPdf ? '📄 Xem PDF' : '🔒 Chưa có PDF'}
+                <p class="text-gray-600 mb-6 line-clamp-3">${contract.description}</p>
+                
+                <div class="flex">
+                    <button onclick="${buttonAction}"
+                            class="${buttonClass} text-white px-6 py-3 rounded-lg transition-colors text-base font-medium interactive-button w-full">
+                        ${buttonText}
                     </button>
                 </div>
             </div>
@@ -400,10 +398,10 @@ function displayContracts(page) {
 
 function viewContractDetails(id) {
     const c = contracts.find(x => x.id === id);
-    if(c && c.pdfUrl) {
-        openPdfModal(c.pdfUrl);
+    if(c && c.image) {
+        openImageModal(c.image);
     } else {
-        infoNoti('Đang cập nhật chi tiết hợp đồng.'); 
+        infoNoti('Hợp đồng này chưa có hình ảnh chi tiết.'); 
     }
 }
 
@@ -415,9 +413,13 @@ function displayPagination() {
     
     if (totalPages <= 1) return;
 
+    // Đảm bảo phân trang có class CSS để hiển thị đẹp
+    pagination.className = 'pagination flex justify-center mt-12 space-x-2';
+
     for (let i = 1; i <= totalPages; i++) {
         const b = document.createElement('button');
-        b.className = `w-10 h-10 rounded-lg font-bold transition-all ${i === currentPage ? 'bg-secondary text-primary' : 'bg-white text-gray-600 hover:bg-gray-100'}`;
+        // Thêm class hover
+        b.className = `w-10 h-10 rounded-lg font-bold transition-all ${i === currentPage ? 'bg-primary text-white hover:bg-primary/90' : 'bg-white text-gray-600 border border-gray-300 hover:bg-gray-100'}`;
         b.textContent = i;
         b.onclick = () => { currentPage = i; displayContracts(currentPage); displayPagination(); };
         pagination.appendChild(b);
@@ -429,6 +431,7 @@ function initSocialRail() {
     const rail = document.getElementById('socialRail');
     if (!rail) return;
 
+    // Logic khởi tạo social rail
     const items = rail.querySelectorAll('.rail-item');
     const io = new IntersectionObserver((entries)=>{
         entries.forEach(e=>{
@@ -442,29 +445,18 @@ function initSocialRail() {
     }, { threshold: 0.1 });
     io.observe(rail);
 
+    // Hiệu ứng di chuột cho nút
     rail.querySelectorAll('.rail-btn').forEach(btn=>{
         btn.addEventListener('mousemove', (e)=>{
             const r = btn.getBoundingClientRect();
             const x = ((e.clientX - r.left) / r.width) * 2 - 1;
             const y = ((e.clientY - r.top) / r.height) * 2 - 1;
             btn.style.transform = `scale(1.1) translate(${x*2}px, ${y*2}px)`;
+            btn.style.boxShadow = '0 8px 15px rgba(0, 0, 0, 0.3)';
         });
         btn.addEventListener('mouseleave', ()=>{
             btn.style.transform = '';
+            btn.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
         });
     });
 }
-
-function interactWithRobot() {
-    const robot = document.querySelector('.interactive-robot');
-    if (robot) {
-        robot.style.transform = 'scale(1.05)';
-        setTimeout(() => robot.style.transform = '', 300);
-        successNoti('🤖 Xin chào! Tôi có thể giúp gì cho bạn?'); 
-    }
-}
-
-function exploreAI() { $id('services')?.scrollIntoView({ behavior: 'smooth' }); }
-function viewProgram() { $id('contracts')?.scrollIntoView({ behavior: 'smooth' }); }
-function showFeature() {}
-function exploreService() {}

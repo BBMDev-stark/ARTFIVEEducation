@@ -898,3 +898,35 @@ body {
 @media (max-height: 720px){
   .social-rail{ transform: translateY(-50%); }
 }
+
+
+/* Custom Modal Backdrop */
+.modal-container {
+    /* Đảm bảo màu nền mờ tối, tạo độ sâu */
+    background-color: rgba(0, 0, 0, 0.9); 
+    transition: background-color 0.3s ease;
+    cursor: zoom-out; /* Thêm con trỏ zoom-out */
+}
+
+/* Hiệu ứng cho Ảnh bên trong Modal */
+#modal-image {
+    /* Quan trọng: Dùng Transition cho tất cả các thuộc tính */
+    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Hiệu ứng Easing mượt mà */
+    
+    /* Khởi tạo nhỏ và ẩn để tạo hiệu ứng phóng to */
+    transform: scale(0.85); 
+    opacity: 0;
+    
+    /* Đảm bảo ảnh không bị tràn màn hình */
+    max-width: 90%; 
+    max-height: 90vh; 
+    
+    /* Tạo đổ bóng sâu */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); 
+}
+
+/* Nút Đóng Modal */
+#image-modal button {
+    transition: color 0.2s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Thêm đổ bóng cho nút */
+}
