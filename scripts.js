@@ -145,7 +145,8 @@ $('consultForm')?.addEventListener('submit', async e => {
 
 // ===================== HỢP ĐỒNG =====================
 const contracts = [
-    { id:1, title:"Lễ ký kết MOU 'Đào tạo gắn kết với doanh nghiệp'", description:"Lễ phát động cuộc thi xây dựng thương hiệu cá nhân YOUBRANDING 2025.", date:"2025-11-22", status:"Đang thực hiện", value:"Liên hệ", image:"https://lh3.googleusercontent.com/d/1mFXya3v0dB8PrzCPSSIuBB0rcHHj78Mh=w1000" },
+    { id:1, title:"Lễ ký kết MOU 'Đào tạo gắn kết với doanh nghiệp'", description:"Lễ phát động cuộc thi xây dựng thương hiệu cá nhân YOUBRANDING 2025.", date:"2025-11-22", status:"Đã ký kết", value:"Liên hệ", image:"https://lh3.googleusercontent.com/d/1mFXya3v0dB8PrzCPSSIuBB0rcHHj78Mh=w1000" },
+    { id:1, title:"Lễ ký kết hợp tác với Art5 - TDMU", description:"Art5 x TDMU: Chính thức hợp tác, cùng kiến tạo tương lai. Một bước tiến vững chắc để đưa tri thức vào thực tế doanh nghiệp. ", date:"2025-11-22", status:"Đã ký kết", value:"Liên hệ", image:"https://lh3.googleusercontent.com/d/11zZR3SyZIr_d6DRS0fCnjK466U17mg0c" },
 ];
 
 let currentPage = 1;
@@ -159,7 +160,7 @@ function displayContracts(page = 1) {
     const items = contracts.slice(start, start+perPage);
 
     grid.innerHTML = items.map(c => `
-        <div class="bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
+        <div class="flex flex-col bg-white rounded-xl overflow-hidden shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group">
             <div class="relative h-48 overflow-hidden">
                 <img src="${c.image || 'https://via.placeholder.com/600x300?text=No+Image'}" 
                      alt="${c.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -167,13 +168,18 @@ function displayContracts(page = 1) {
                     ${c.status}
                 </span>
             </div>
-            <div class="p-6">
-                <div class="flex justify-between text-sm mb-3">
-                    <span class="text-gray-500">${c.date}</span>
-                    <span class="font-bold text-secondary">${c.value}</span>
-                </div>
-                <h3 class="text-xl font-bold text-primary mb-2 line-clamp-2">${c.title}</h3>
-                <p class="text-gray-600 mb-6 line-clamp-3">${c.description}</p>
+            
+            <div class="p-6 flex flex-col flex-grow">
+                
+                <div class="flex-grow">
+                    <div class="flex justify-between text-sm mb-3">
+                        <span class="text-gray-500">${c.date}</span>
+                        <span class="font-bold text-secondary">${c.value}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-2 line-clamp-2">${c.title}</h3>
+                    <p class="text-gray-600 mb-6 line-clamp-3">${c.description}</p>
+                </div> 
+                
                 <button onclick="openImageModal('${c.image || ''}')" 
                         class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-lg font-medium transition">
                     Xem Ảnh
