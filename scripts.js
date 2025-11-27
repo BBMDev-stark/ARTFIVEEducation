@@ -146,7 +146,7 @@ $('consultForm')?.addEventListener('submit', async e => {
 // ===================== HỢP ĐỒNG =====================
 const contracts = [
     { id:1, title:"Lễ ký kết MOU 'Đào tạo gắn kết với doanh nghiệp'", description:"Lễ phát động cuộc thi xây dựng thương hiệu cá nhân YOUBRANDING 2025.", date:"2025-11-22", status:"Đã ký kết", value:"Liên hệ", image:"https://lh3.googleusercontent.com/d/1mFXya3v0dB8PrzCPSSIuBB0rcHHj78Mh=w1000" },
-    { id:1, title:"Lễ ký kết hợp tác với Art5 - TDMU", description:"Art5 x TDMU: Chính thức hợp tác, cùng kiến tạo tương lai. Một bước tiến vững chắc để đưa tri thức vào thực tế doanh nghiệp. ", date:"2025-11-22", status:"Đã ký kết", value:"Liên hệ", image:"https://lh3.googleusercontent.com/d/11zZR3SyZIr_d6DRS0fCnjK466U17mg0c" },
+    { id:1, title:"Lễ ký kết hợp tác với Art5 - TDMU", description:"Art5 x TDMU: Chính thức hợp tác, cùng kiến tạo tương lai. Một bước tiến vững chắc để đưa tri thức vào thực tế doanh nghiệp. ", date:"2025-03-10", status:"Đã ký kết", value:"Liên hệ", image:"https://lh3.googleusercontent.com/d/11zZR3SyZIr_d6DRS0fCnjK466U17mg0c" },
 ];
 
 let currentPage = 1;
