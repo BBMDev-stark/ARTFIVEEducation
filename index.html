@@ -41,7 +41,7 @@
                         class="text-primary hover:text-secondary transition-colors interactive-nav-link">Trang chủ</a>
                     <a href="#about"
                         class="text-primary hover:text-secondary transition-colors interactive-nav-link">Giới thiệu</a>
-                    <a href="#values"
+                    <a href="#core-values"
                         class="text-primary hover:text-secondary transition-colors interactive-nav-link">Giá trị</a>
                     <a href="#services"
                         class="text-primary hover:text-secondary transition-colors interactive-nav-link">Dịch vụ</a>
@@ -766,7 +766,7 @@
 
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="bg-white/10 backdrop-blur-sm p-8 rounded-xl hover-scale border border-white/20 service-card group transition-all duration-300 hover:bg-white/15"
-    onclick="exploreService('ai-applications')">
+    onclick="event.stopPropagation(); openRentalModal()">
     
     <div class="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
         <img src="https://ubtechvietnam.edu.vn/www.ubtechvietnam.com/wp-content/uploads/2021/03/Premium_Robots_7.jpg" alt="Robot Icon" class="w-full h-full object-cover rounded-full p-1" />
