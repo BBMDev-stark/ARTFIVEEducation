@@ -28,6 +28,7 @@
     <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
         <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
+                <a href="#home">
                 <div class="flex items-center">
                     <div
                         class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mr-3 shadow-lg">
@@ -36,6 +37,7 @@
                     <span class="text-2xl font-bold text-primary">ART FIVE</span>
                     <span class="text-secondary ml-2">EDUCATION</span>
                 </div>
+                </a>
                 <div class="hidden md:flex space-x-8">
                     <a href="#home"
                         class="text-primary hover:text-secondary transition-colors interactive-nav-link">Trang chủ</a>
@@ -906,7 +908,7 @@
                                 class="absolute right-full mr-3 px-3 py-1 rounded-lg text-white text-sm font-semibold bg-black/70 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">TikTok</span>
                         </div>
                         <div class="w-10 h-10 bg-secondary/20 rounded-full flex items-center justify-center hover:bg-secondary/40 transition-colors cursor-pointer interactive-button"
-                            onclick="showNotification('📱 Hotline: +84 123 456 789')">
+                            onclick="showNotification('📱 Hotline: 0965 39 4444')">
                             <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" aria-hidden="true">
                                 <path fill="currentColor"
                                     d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8ZM9.75 15.5v-7l6 3.5-6 3.5Z" />
@@ -953,16 +955,13 @@
                             onclick="showNotification('Địa chỉ: TP. Hồ Chí Minh, Việt Nam')">
                             <span>TP. Hồ Chí Minh, Việt Nam</span>
                         </div>
-                        <div class="flex items-center text-white/70 cursor-pointer interactive-button"
-                            onclick="showNotification('Gọi ngay: +84 123 456 789')">
-                            <span>+84 123 456 789</span>
+                        <div class="flex items-center text-white/70 cursor-pointer interactive-button">
+                            <span>0965 39 4444</span>
                         </div>
-                        <div class="flex items-center text-white/70 cursor-pointer interactive-button"
-                            onclick="showNotification('Email: info@artfive.edu.vn')">
+                        <div class="flex items-center text-white/70 cursor-pointer interactive-button">
                             <span>info@artfive.edu.vn</span>
                         </div>
-                        <div class="flex items-center text-white/70 cursor-pointer interactive-button"
-                            onclick="showNotification('Giờ làm việc: T2-T6: 8:00 - 17:00')">
+                        <div class="flex items-center text-white/70 cursor-pointer interactive-button">
                             <span>T2-T6: 8:00 - 17:00</span>
                         </div>
                     </div>
@@ -1075,40 +1074,28 @@
 
     <!-- ==== FIXED SOCIAL RAIL (RIGHT) ==== -->
     <div id="socialRail"
-        class="fixed right-4 top-1/2 -translate-y-1/2 z-[1800] hidden md:flex flex-col items-center gap-4 animate-[fadeIn_1s_ease-out]">
-        <!-- Facebook -->
-        <a href="#" target="_blank" rel="noopener"
-            class="group relative flex items-center justify-center w-12 h-12 rounded-full bg-[#1877F2] shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
-            <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" aria-hidden="true">
-                <path fill="currentColor"
-                    d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.19 8.44 9.94v-7.03H7.9v-2.9h2.54V9.41c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.46h-1.26c-1.24 0-1.62.78-1.62 1.57v1.88h2.76l-.44 2.9h-2.32V22c4.78-.75 8.44-4.92 8.44-9.94Z" />
-            </svg>
-            <span
-                class="absolute right-full mr-3 px-3 py-1 rounded-lg text-white text-sm font-semibold bg-black/70 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">Facebook</span>
-        </a>
+    class="fixed right-4 bottom-8 z-[1800] flex flex-col items-center gap-4 animate-[fadeIn_1s_ease-out]">
+    
+    <a href="tel:0984465713" target="_blank" rel="noopener"
+        class="group relative flex items-center justify-center w-16 h-16 rounded-full bg-[#34c759] shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" id="phone" class="w-8 h-8">
+            <defs>
+                <linearGradient id="a" x1="50%" x2="50%" y1="0%" y2="100%">
+                    <stop offset="0%" stop-color="#86FC6F"></stop>
+                    <stop offset="100%" stop-color="#0CD419"></stop>
+                </linearGradient>
+            </defs>
+            <g fill="none" fill-rule="evenodd">
+                <circle cx="20" cy="20" r="20" fill="url(#a)"></circle>
+                <path fill="#FFF" d="M23.1179863,24.9844003 C22.7849875,25.1958537 22.3681546,25.2262713 22.0079863,25.0654003 C21.2939863,24.6694003 19.9919863,23.7244003 18.1859863,21.9184003 C16.3799863,20.1124003 15.3509863,18.7234003 14.9519863,18.0184003 C14.7911153,17.658232 14.8215329,17.2413991 15.0329863,16.9084003 L16.0709863,15.0904003 C16.4429863,14.4454003 16.5269863,14.0374003 16.1219863,13.4104003 L13.4549863,9.32740033 C12.6959863,8.12740033 12.3089863,8.18140033 11.6549863,8.48140033 C8.25298626,10.0294003 6.92398626,12.2194003 11.7509863,19.8424003 C13.0529863,21.8974003 17.0309863,26.2474003 20.4239863,28.4494003 C27.6899863,33.1684003 30.0809863,31.7494003 31.4999863,28.4494003 C31.7999863,27.7834003 31.9319863,27.3964003 30.7889863,26.6494003 L26.6609863,24.0244003 C26.0339863,23.6224003 25.7279863,23.5174003 25.0799863,23.8924003 L23.1179863,24.9844003 Z"></path>
+            </g>
+        </svg>
 
-        <!-- YouTube -->
-        <a href="#" target="_blank" rel="noopener"
-            class="group relative flex items-center justify-center w-12 h-12 rounded-full bg-[#FF0000] shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
-            <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" aria-hidden="true">
-                <path fill="currentColor"
-                    d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.5 31.5 0 0 0 0 12a31.5 31.5 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1C4.5 20.5 12 20.5 12 20.5s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.5 31.5 0 0 0 24 12a31.5 31.5 0 0 0-.5-5.8ZM9.75 15.5v-7l6 3.5-6 3.5Z" />
-            </svg>
-            <span
-                class="absolute right-full mr-3 px-3 py-1 rounded-lg text-white text-sm font-semibold bg-black/70 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">YouTube</span>
-        </a>
-
-        <!-- TikTok -->
-        <a href="#" target="_blank" rel="noopener"
-            class="group relative flex items-center justify-center w-12 h-12 rounded-full bg-black shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-x-1 hover:scale-105">
-            <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" aria-hidden="true">
-                <path fill="currentColor"
-                    d="M16.7 2h2.1a6.5 6.5 0 0 0 .2 1.6 5.8 5.8 0 0 0 1 2 6 6 0 0 0 2.2 1.8 7 7 0 0 0 1.8.6v2.2a8.5 8.5 0 0 1-6-1.9v7.7a6.8 6.8 0 1 1-6.8-6.8c.4 0 .8 0 1.2.1v2.4a3.9 3.9 0 1 0 2.9 3.7V2h1.6Z" />
-            </svg>
-            <span
-                class="absolute right-full mr-3 px-3 py-1 rounded-lg text-white text-sm font-semibold bg-black/70 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">TikTok</span>
-        </a>
-    </div>
+        <span
+            class="absolute right-full mr-3 px-3 py-1 rounded-lg text-white text-sm font-semibold bg-black/70 opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">Gọi ngay: 0984 465 713</span>
+    </a>
+</div>
 
     <style>
         @keyframes fadeIn {
