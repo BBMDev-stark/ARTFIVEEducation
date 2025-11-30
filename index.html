@@ -26,33 +26,77 @@
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 shadow-sm">
-        <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <a href="#home">
+    <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <a href="#home">
                 <div class="flex items-center">
                     <div
                         class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center mr-3 shadow-lg">
-                        <img src="media/logo.png" alt="">
+                        <img src="media/logo.png" alt="Logo ART FIVE">
                     </div>
                     <span class="text-2xl font-bold text-primary">ART FIVE</span>
                     <span class="text-secondary ml-2">EDUCATION</span>
                 </div>
-                </a>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home"
-                        class="text-primary hover:text-secondary transition-colors interactive-nav-link">Trang chủ</a>
-                    <a href="#about"
-                        class="text-primary hover:text-secondary transition-colors interactive-nav-link">Giới thiệu</a>
-                    <a href="#core-values"
-                        class="text-primary hover:text-secondary transition-colors interactive-nav-link">Giá trị</a>
-                    <a href="#services"
-                        class="text-primary hover:text-secondary transition-colors interactive-nav-link">Dịch vụ</a>
-                    <a href="#contracts"
-                        class="text-primary hover:text-secondary transition-colors interactive-nav-link">Hợp đồng</a>
-                </div>
+            </a>
+
+            <div class="hidden md:flex space-x-8" id="desktop-menu">
+                <a href="#home"
+                    class="text-primary hover:text-secondary transition-colors interactive-nav-link">Trang chủ</a>
+                <a href="#about"
+                    class="text-primary hover:text-secondary transition-colors interactive-nav-link">Giới thiệu</a>
+                <a href="#core-values"
+                    class="text-primary hover:text-secondary transition-colors interactive-nav-link">Giá trị</a>
+                <a href="#services"
+                    class="text-primary hover:text-secondary transition-colors interactive-nav-link">Dịch vụ</a>
+                <a href="#contracts"
+                    class="text-primary hover:text-secondary transition-colors interactive-nav-link">Hợp đồng</a>
             </div>
+
+            <button id="hamburger-btn" class="md:hidden text-primary hover:text-secondary p-2 transition-colors">
+                <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+                <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
         </div>
-    </nav>
+    </div>
+</nav>
+
+<div id="mobile-menu"
+    class="fixed top-0 left-0 w-full h-full bg-black/80 z-40 md:hidden 
+           transition-all duration-500 ease-in-out opacity-0 transform -translate-y-full overflow-y-auto 
+           backdrop-blur-md">
+    
+    <div class="absolute top-0 w-full flex justify-between items-center h-16 px-4">
+        <a href="#home" class="flex items-center">
+            <img src="media/logo.png" alt="Logo ART FIVE" class="w-8 h-8 mr-2"> 
+            <span class="text-xl font-bold text-white uppercase">ART FIVE</span>
+            <span class="text-secondary ml-1 text-sm">EDUCATION</span> 
+        </a>
+    </div>
+    
+    <div class="flex flex-col items-center justify-center h-full space-y-8 text-white text-3xl font-medium tracking-wide text-center">
+        
+        <a href="#home" class="transition-all duration-300 hover:text-secondary hover:scale-[1.03] uppercase">Trang chủ</a>
+        <a href="#about" class="transition-all duration-300 hover:text-secondary hover:scale-[1.03] uppercase">Giới thiệu</a>
+        <a href="#core-values" class="transition-all duration-300 hover:text-secondary hover:scale-[1.03] uppercase">Giá trị</a>
+        <a href="#services" class="transition-all duration-300 hover:text-secondary hover:scale-[1.03] uppercase">Dịch vụ</a>
+        <a href="#contracts" class="transition-all duration-300 hover:text-secondary hover:scale-[1.03] uppercase">Hợp đồng</a>
+
+        <div class="relative w-64 mt-4">
+            <input type="text" placeholder="Keywords..."
+                class="w-full bg-transparent border-b border-gray-500 text-white placeholder-gray-500 focus:outline-none focus:border-secondary pb-1 text-center text-lg lowercase tracking-wider">
+            <svg class="absolute right-0 bottom-1 w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+        </div>
+    </div>
+</div>
 
     <!-- Hero Section -->
     <section id="home" class="tech-hero min-h-screen flex items-center relative overflow-hidden">
@@ -1203,6 +1247,28 @@
 </div>
 
     <script src="scripts.js"></script>
+    <script>
+    // Lấy các phần tử cần thiết
+    const button = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+
+    // Thêm sự kiện click cho nút
+    button.addEventListener('click', () => {
+        // Sử dụng phương thức toggle() của classList để thêm/bỏ class 'hidden'
+        // Tailwind CSS sẽ ẩn/hiện phần tử dựa trên class này
+        menu.classList.toggle('hidden');
+    });
+
+    // Tùy chọn: Thêm chức năng đóng menu khi click vào một liên kết
+    const mobileLinks = menu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (!menu.classList.contains('hidden')) {
+                menu.classList.add('hidden');
+            }
+        });
+    });
+</script>
 </body>
 
 </html>
